@@ -70,7 +70,7 @@ Note: The script initiation is done with the underlined parameters: +1,3,m,1,960
 
 upload.py --chip esp8266 --port COM3 --baud 921600 erase_flash --before default_reset --after hard_reset write_flash 0x0 tasmota4M.bin
 
-### reset parameters
+### Factory reset
 1 – Turn off the module for 30 seconds.
 
 2 – Turn on the module for 2 seconds and turn it off. Repeat 7 times, leave on last time.
