@@ -1,24 +1,27 @@
 # HAN-WIFI-Module
 The HAN module is a HAN &lt;-> WIFI adapter designed to be connected externally to Intelligent Measuring Equipment (EMI) of single-phase or three-phase BTN points using the Modbus communication protocol, part of the InovGrid solution developed by E-Redes in Portugal (formerly EDP Distribution) or other similar systems that use the same protocol.
 
+![Install](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/instalation.jpeg)
 
 The module comes with the latest version of the opensource Tasmota project, making it highly adaptable, by customizing the Tasmota script, to the needs of your projects. More info at https://tasmota.github.io/docs/Smart-Meter-Interface/
 
 
 ## Technical Characteristics
-  ##### Voltage: 5V ±10% 
-  ##### WIFI: 802.11 b/g/n 2.4 GHz
-  ##### Consumption: 0.5W avg
-  ##### Power: 14±2 dBm @54Mbps
-  ##### SOC: ESP8266EX RISC 32bits 160Mhz 
-  ##### Sensitivity: -70 dBm @54Mbps
-  ##### Flash: 4096KB 
-  ##### Protocols: IPv4, TCP/UDP, MODBUS RTU
-  ##### Operating environment: 0°C – 70°C, < 90%RH 
-  ##### Software upgrade: OTA, UART
-  ##### Dimensions: 20x60x18 mm 
-  ##### Communication: RJ-12 EIA-485 half-duplex
-  ##### Compliance: ANATEL, CE, FCC, IC, KCC, NCC, SRRC, TELEC
+  | Parameter              | Value
+  | :--------------------- |:-------------------- |
+  | Voltage                | 5V ±10%
+  | Consumption            | 0.5W avg
+  | WIFI                   | 802.11 b/g/n 2.4 GHz
+  | Power                  | 14±2 dBm @54Mbps
+  | Sensitivity            | -70 dBm @54Mbps
+  | SOC                    | ESP8266EX RISC 32bits 160Mhz
+  | Flash                  | 4096KB
+  | Protocols              | IPv4, TCP/UDP, MODBUS RTU
+  | Operating environment  | 0°C – 70°C, < 90%RH
+  | Software upgrade       | OTA, UART
+  | Dimensions             | 20x60x18 mm
+  | Communication          | RJ-12 EIA-485 half-duplex
+  | Compliance             | ANATEL, CE, FCC, IC, KCC, NCC, SRRC, TELEC
   
 ## Instructions
 
