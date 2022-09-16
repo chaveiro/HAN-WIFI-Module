@@ -1,0 +1,156 @@
+>D 32
+pin=0
+pout=0
+pi_d=0
+po_d=0
+hr=0
+p:pi_m=0
+p:po_m=0
+ws="WebSend [emoncms.org:80]"
+node="EdpBox"
+key="___CHANGE_TO_YOUR_DEVICE_KEY____"
+
+;#after sensors init
+>BS
+smlj=0
+tper=30
+=>sensor53 r
+
+;#TelePeriod
+>T
+; get total consumption and total feed
+pin=sml[30]   ; Ei
+pout=sml[31]  ; Ee
+
+
+;#every second
+>S
+if upsecs>20
+and upsecs<30
+{
+smlj=1
+}
+; at midnight, save meter total values
+hr=hours
+if chg[hr]>0 and hr==0
+{
+pi_m=pin
+po_m=pout
+svars
+}
+; on teleperiod calculate current daily values from midnight
+if upsecs%tper==0
+{
+pi_d=pin-pi_m
+po_d=pout-po_m
+
+;#Single phase - Voltage, Current, Power, Power Factor, Frequency
+=>%ws%/input/post.json?node=%node%&json={V:%sml[7]%,I:%sml[8]%,P:%sml[9]%,Pe:%sml[10]%,Pf:%sml[11]%,F:%sml[12]%}&devicekey=%key%
+
+;#Triphase - Voltage and Current
+;#=>%ws%/input/post.json?node=%node%&json={V2:%sml[13]%,I2:%sml[14]%,V3:%sml[15]%,I3:%sml[16]%,It:%sml[17]%}&devicekey=%key%
+
+;#Triphase - Power import + Power Factor
+;#=>%ws%/input/post.json?node=%node%&json={Pi1:%sml[18]%,Pi2:%sml[19]%,Pi3:%sml[20]%,Pf1:%sml[24]%,Pf2:%sml[25]%,Pf3:%sml[26]%}&devicekey=%key%
+
+;#Triphase - Power Export
+;#=>%ws%/input/post.json?node=%node%&json={Pe1:%sml[21]%,Pe2:%sml[22]%,Pe3:%sml[23]%}&devicekey=%key%
+
+;#Energy
+=>%ws%/input/post.json?node=%node%&json={ET1:%sml[27]%,ET2:%sml[28]%,ET3:%sml[29]%,Ei:%sml[30]%,Ee:%sml[31]%,Tarif:%sml[32]%,ConT1:%sml[33]%}&devicekey=%key%
+
+;#DCP
+=>%ws%/input/post.json?node=%node%&json={DCP:%sml[36]%,Q:%sml[37]%,K:%sml[38]%}&devicekey=%key%
+
+}
+
+;#show on WEBUI main page
+>W
+<br>
+Daily Import: {m} %pi_d% kWh
+Daily Export: {m} %po_d% kWh
+
+;#send MQTT on teleperiod
+>J
+,"daily_consumption":%pi_d%,"daily_feed":%po_d%
+
+;#meter definition
+>M 1
++1,3,m,1,9300,EB,1,4,r010400010001,r0104006C0007,r010400730007,r0104007A0006,r010400260003,r010400160006,r0104000B0004,r010400840003
+
+1,=hClock
+; 01
+1,01040CUUuu@i0:1,Year,,Year,0
+1,01040Cxxxxuu@i0:1,Month,,Month,0
+1,01040Cxxxxxxuu@i0:1,Day,,Day,0
+1,01040Cxxxxxxxxxxuu@i0:1,Clock,h,CH,0
+1,01040Cxxxxxxxxxxxxuu@i0:1,Clock,m,CM,0
+1,01040Cxxxxxxxxxxxxxxuu@i0:1,Clock,s,CS,0
+
+1,=h<hr> Overview
+; 6C
+1,01040EUUuu@i1:10,Voltage L1,V,V1,1
+1,01040ExxxxUUuu@i1:10,Current L1,A,I1,1
+; 79
+1,01041cx8x8x8UUuuUUuu@i2:1,Active Power Import,W,Pi,0
+; 7A
+1,01040eUUuuUUuu@i3:1,Active Power Export,W,Pe,0
+; 7B
+1,01040exxxxxxxxUUuu@i3:1000,Power Factor,pf,PF,3
+; 7F
+1,01040exxxxxxxxxxxxxxxxxxxxxxxxUUuu@i3:10,Frequency,Hz,F,1
+
+1,=h<hr> Triphase
+1,01040ExxxxxxxxUUuu@i1:10,Voltage L2,V,V2,1
+1,01040ExxxxxxxxxxxxUUuu@i1:10,Current L2,A,I2,1
+1,01040ExxxxxxxxxxxxxxxxUUuu@i1:10,Voltage L3,V,V3,1
+1,01040ExxxxxxxxxxxxxxxxxxxxUUuu@i1:10,Current L3,A,I3,1
+1,01040ExxxxxxxxxxxxxxxxxxxxxxxxUUuu@i1:10,Current Total,A,I,1
+
+; 73
+
+1,=h<hr>Triphase - Active Power Import
+1,01041cUUuuUUuu@i2:1,L1,W,Pi1,0
+1,01041cx8UUuuUUuu@i2:1,L2,W,Pi2,0
+1,01041cx8x8UUuuUUuu@i2:1,L3,W,Pi3,0
+
+1,=h<hr>Triphase - Active Power Export
+1,01041cx4UUuuUUuu@i2:1,L1,W,Pe1,0
+1,01041cx8x4UUuuUUuu@i2:1,L2,W,Pe2,0
+1,01041cx8x8x4UUuuUUuu@i2:1,L3,W,Pe3,0
+
+1,=h<hr>Triphase - Power factor
+: 7C
+1,01040exxxxxxxxxxxxUUuu@i3:1000,L1,pf,PF1,3
+1,01040exxxxxxxxxxxxxxxxUUuu@i3:1000,L2,pf,PF2,3
+1,01040exxxxxxxxxxxxxxxxxxxxUUuu@i3:1000,L3,pf,PF3,3
+
+
+1,=h<hr>Energy
+; 26
+1,01040CUUuuUUuu@i4:1000,T1 Vazio (1),kWh,ET1,1
+1,01040CxxxxxxxxUUuuUUuu@i4:1000,T2 Ponta (2),kWh,ET2,1
+1,01040CxxxxxxxxxxxxxxxxUUuuUUuu@i4:1000,T3 Cheia (3),kWh,ET3,1
+; 16
+1,010418UUuuUUuu@i5:1000,Import,kWh,Ei,3
+1,010418xxxxxxxxUUuuUUuu@i5:1000,Export,kWh,Ee,3
+
+1,=h<hr>
+
+; 0B
+
+1,01040euu@i6:1,Tariff ,,Tarif,0
+1,01040exxUUuuUUuu@i6:1000,Contract T1,kVA,ConT1,2
+1,01040exxxxxxxxxxUUuuUUuu@i6:1000,Contract T2,kVA,ConT2,2
+1,01040exxxxxxxxxxxxxxxxxxUUuuUUuu@i6:1000,Contract T3,kVA,ConT3,2
+
+1,=h<hr>
+
+; 84
+
+1,01040auu@i7:1,DCP,,DCP,0
+1,01040axxUUuuUUuu@i7:1,DCP Q,,Q,0
+1,01040axxxxxxxxxxUUuuUUuu@i7:100,DCP K,,K,1
+
+
+#
