@@ -6,9 +6,6 @@ po_d=0
 hr=0
 p:pi_m=0
 p:po_m=0
-ws="WebSend [emoncms.org:80]"
-node="EdpBox"
-key="___CHANGE_TO_YOUR_DEVICE_KEY____"
 
 ;#after sensors init
 >BS
@@ -43,25 +40,6 @@ if upsecs%tper==0
 {
 pi_d=pin-pi_m
 po_d=pout-po_m
-
-;#Single phase - Voltage, Current, Power, Power Factor, Frequency
-=>%ws%/input/post.json?node=%node%&json={P:%sml[7]%,Pe:%sml[8]%,Pf:%sml[9]%,F:%sml[10]%,V:%sml[11]%,I:%sml[12]%}&devicekey=%key%
-
-;#Triphase - Voltage and Current
-=>%ws%/input/post.json?node=%node%&json={V2:%sml[13]%,I2:%sml[14]%,V3:%sml[15]%,I3:%sml[16]%,It:%sml[17]%}&devicekey=%key%
-
-;#Triphase - Power import + Power Factor
-=>%ws%/input/post.json?node=%node%&json={Pi1:%sml[18]%,Pi2:%sml[19]%,Pi3:%sml[20]%,Pf1:%sml[24]%,Pf2:%sml[25]%,Pf3:%sml[26]%}&devicekey=%key%
-
-;#Triphase - Power Export
-=>%ws%/input/post.json?node=%node%&json={Pe1:%sml[21]%,Pe2:%sml[22]%,Pe3:%sml[23]%}&devicekey=%key%
-
-;#Energy
-=>%ws%/input/post.json?node=%node%&json={ET1:%sml[27]%,ET2:%sml[28]%,ET3:%sml[29]%,Ei:%sml[30]%,Ee:%sml[31]%,Tarif:%sml[32]%,ConT1:%sml[33]%}&devicekey=%key%
-
-;#DCP
-=>%ws%/input/post.json?node=%node%&json={DCP:%sml[36]%,Q:%sml[37]%,K:%sml[38]%}&devicekey=%key%
-
 }
 
 ;#show on WEBUI main page
@@ -88,6 +66,9 @@ Daily Export: {m} %po_d% kWh
 1,01040Cxxxxxxxxxxxxxxuu@i0:1,Clock,s,CS,0
 
 1,=h<hr> Overview
+; 6C
+1,01040EUUuu@i1:10,Voltage L1,V,V1,1
+1,01040ExxxxUUuu@i1:10,Current L1,A,I1,1
 ; 79
 1,01041cx8x8x8UUuuUUuu@i2:1,Active Power Import,W,Pi,0
 ; 7A
@@ -98,9 +79,6 @@ Daily Export: {m} %po_d% kWh
 1,01040exxxxxxxxxxxxxxxxxxxxxxxxUUuu@i3:10,Frequency,Hz,F,1
 
 1,=h<hr> Triphase
-; 6C
-1,01040EUUuu@i1:10,Voltage L1,V,V1,1
-1,01040ExxxxUUuu@i1:10,Current L1,A,I1,1
 1,01040ExxxxxxxxUUuu@i1:10,Voltage L2,V,V2,1
 1,01040ExxxxxxxxxxxxUUuu@i1:10,Current L2,A,I2,1
 1,01040ExxxxxxxxxxxxxxxxUUuu@i1:10,Voltage L3,V,V3,1
