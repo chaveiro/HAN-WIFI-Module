@@ -1,7 +1,7 @@
 # HAN-WIFI-Module
 The HAN module is a HAN &lt;-> WIFI adapter designed to be connected externally to Intelligent Measuring Equipment (EMI) of single-phase or three-phase BTN points using the Modbus communication protocol, part of the InovGrid solution developed by E-Redes in Portugal (formerly EDP Distribution) or other similar systems that use the same protocol.
 
-![Install](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/instalation.jpeg)
+![Install](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/instalation.jpg)
 
 The module comes with the latest version of the opensource Tasmota project, making it highly adaptable, by customizing the Tasmota script, to the needs of your projects. More info at https://tasmota.github.io/docs/Smart-Meter-Interface/
 
@@ -22,6 +22,9 @@ The module comes with the latest version of the opensource Tasmota project, maki
   | Dimensions             | 20x60x18 mm
   | Communication          | RJ-12 EIA-485 half-duplex
   | Compliance             | ANATEL, CE, FCC, IC, KCC, NCC, SRRC, TELEC
+  
+### RJ12 pinout
+![pinout](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/rj12%20pinout.jpg)
   
 ## Instructions
 
