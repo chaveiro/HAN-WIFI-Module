@@ -52,7 +52,7 @@
 #define FRIENDLY_NAME     "Han Module"         // [FriendlyName] Friendlyname up to 32 characters used by webpages and Alexa
 
 #undef  OTA_URL
-#define OTA_URL           "https://ota.devices.gtronica.com/fw/" PROJECT ".bin"  // [OtaUrl]
+#define OTA_URL           "http://ota.devices.gtronica.com/fw/" PROJECT ".bin"  // [OtaUrl]
 
 // -- Setup your own Wifi settings  ---------------
 /*
@@ -135,7 +135,7 @@
 #undef USE_ARMTRONIX_DIMMERS                     // Disable support for Armtronix Dimmers (+1k4 code)
 #undef USE_PS_16_DZ                              // Disable support for PS-16-DZ Dimmer and Sonoff L1 (+2k code)
 #undef USE_SONOFF_IFAN                           // Disable support for Sonoff iFan02 and iFan03 (+2k code)
-//#undef USE_BUZZER                                // Disable support for a buzzer (+0k6 code)
+#undef USE_BUZZER                                // Disable support for a buzzer (+0k6 code)
 #undef USE_ARILUX_RF                             // Disable support for Arilux RF remote controller
 #undef USE_SHUTTER                               // Disable Shutter support for up to 4 shutter with different motortypes (+6k code)
 #undef USE_DEEPSLEEP                             // Disable support for deepsleep (+1k code)
