@@ -43,16 +43,29 @@
 
 #undef  FALLBACK_MODULE 
 #define FALLBACK_MODULE USER_MODULE      // [Module2] Select default module on fast reboot where USER_MODULE is user template
-#define USER_TEMPLATE "{\"NAME\":\"MODBUS\",\"GPIO\":[1,1,320,1,1,1,1,1,1,1,1,1,1,1],\"FLAG\":0,\"BASE\":18}"
+// Default 
+//#define USER_TEMPLATE "{\"NAME\":\"Generic\",\"GPIO\":[1,1,1,1,1,1,1,1,1,1,1,1,1,1],\"FLAG\":0,\"BASE\":18}"  // [Template] Set JSON template
+
+// MiniHAN v1
+//#define USER_TEMPLATE "{\"NAME\":\"MODBUS\",\"GPIO\":[1,1,320,1,1,1,1,1,1,1,1,1,1,1],\"FLAG\":0,\"BASE\":18}"
+
+// MiniHAN v2 with I2C
+#define USER_TEMPLATE "{\"NAME\":\"MODBUS+I2C\",\"GPIO\":[1,1,320,1,640,608,1,1,1,1,1,1,1,1],\"FLAG\":0,\"BASE\":18}"
+
+//#undef  CODE_IMAGE_STR
+#define CODE_IMAGE_STR    "MiniHAN v2" //footer string
 
 #undef  PROJECT
 #define PROJECT           "HanModule"         // PROJECT is used as the default topic delimiter
 
 #undef  FRIENDLY_NAME
-#define FRIENDLY_NAME     "Han Module"         // [FriendlyName] Friendlyname up to 32 characters used by webpages and Alexa
+#define FRIENDLY_NAME     "Mini HAN Module"         // [FriendlyName] Friendlyname up to 32 characters used by webpages and Alexa
 
 #undef  OTA_URL
 #define OTA_URL           "http://ota.devices.gtronica.com/fw/" PROJECT ".bin"  // [OtaUrl]
+
+//#define MY_LANGUAGE            pt_PT           // Portuguese in Portugal
+
 
 // -- Setup your own Wifi settings  ---------------
 /*
@@ -153,9 +166,9 @@
 
 //#undef USE_COUNTER                               // Disable counters
 #define USE_ADC_VCC                              // Display Vcc in Power status. Disable for use as Analog input on selected devices
-#undef USE_DS18x20                               // Disable DS18x20 sensor
+//#undef USE_DS18x20                               // Disable DS18x20 sensor
 
-#undef USE_I2C                                   // Disable all I2C sensors and devices
+//#undef USE_I2C                                   // Disable all I2C sensors and devices
 #undef USE_SPI                                   // Disable all SPI devices
 #undef USE_DISPLAY                               // Disable Display support
 
@@ -167,7 +180,7 @@
 #undef USE_SR04                                  // Disable support for HC-SR04 ultrasonic devices (+1k code)
 #undef USE_DYP                                   // Disable support for DYP ME-007 ultrasonic distance sensor, serial port version (+0k5 code)
 #undef USE_SERIAL_BRIDGE                         // Disable support for software Serial Bridge
-#undef USE_TCP_BRIDGE                            // DIsable support for Serial to TCP bridge (+1.3k code)
+//#undef USE_TCP_BRIDGE                            // DIsable support for Serial to TCP bridge (+1.3k code)
 #undef USE_MP3_PLAYER                            // Disable DFPlayer Mini MP3 Player RB-DFR-562 commands: play, volume and stop
 #undef USE_AZ7798                                // Disable support for AZ-Instrument 7798 CO2 datalogger
 #undef USE_PN532_HSU                             // Disable support for PN532 using HSU (Serial) interface (+1k8 code, 140 bytes mem)
@@ -190,7 +203,7 @@
 
 //#undef USE_ENERGY_SENSOR                         // Disable energy sensors
 
-#undef USE_DHT                                   // Disable support for DHT11, AM2301 (DHT21, DHT22, AM2302, AM2321) and SI7021 Temperature and Humidity sensor
+//#undef USE_DHT                                   // Disable support for DHT11, AM2301 (DHT21, DHT22, AM2302, AM2321) and SI7021 Temperature and Humidity sensor
 #undef USE_MAX31855                              // Disable MAX31855 K-Type thermocouple sensor using softSPI
 #undef USE_MAX31865                              // Disable support for MAX31865 RTD sensors using softSPI
 #undef USE_LMT01                                 // Disable support for TI LMT01 temperature sensor, count pulses on single GPIO (+0k5 code)
@@ -230,6 +243,9 @@
 #define MAX_METERS 2
 #define MAXSVARS 10
 
+//#define SCRIPT_FULL_OPTIONS
+#define USE_GOOGLE_CHARTS  // for charts
+//#define USE_SCRIPT_I2C
 
 
 /*
