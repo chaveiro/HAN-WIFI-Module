@@ -16,7 +16,7 @@ The module comes with the latest version of the opensource Tasmota project, maki
   | Sensitivity            | -70 dBm @54Mbps
   | SOC                    | ESP8266EX RISC 32bits 160Mhz
   | Flash                  | 4096KB
-  | Protocols              | IPv4, TCP/UDP, MODBUS RTU
+  | Protocols              | IPv4, TCP/UDP, MODBUS RTU, I2C (option)
   | Operating environment  | 0°C – 70°C, < 90%RH
   | Software upgrade       | OTA, UART
   | Dimensions             | 20x60x18 mm
@@ -58,7 +58,7 @@ The module comes with the latest version of the opensource Tasmota project, maki
 
 4 – Check in the menu “Consoles” -> “Console” if there are no errors, the module is configured.
 
-Note: The script initiation is done with the underlined parameters: +1,3,m,1,9600,EB,1,[…]
+Note: The script initiation is done with the underlined parameters: +1,3,m,1,9600,EB,1(16),[…]
 
 ### Over The Air Update
 1 – Connect to the same WIFI network where the module is connected. Open the module IP obtained in the WIFI configuration in the browser, or check which one has been assigned on your router.
@@ -68,7 +68,7 @@ Note: The script initiation is done with the underlined parameters: +1,3,m,1,960
 3 – Change the URL address or provide an appropriate upgrade file and click “Start upgrade”.
 
 ### Firmware Recovery
-1 – Use a USB - RS485 adapter (not supplied) and make a cable that allows you to connect the GND, 5V, A and B pins of the RJ12 plug to the adapter. Alternatively connect the 5V to an external power supply.
+1 – Use a USB - RS485 adapter (For V1 only, not supplied) and make a cable that allows you to connect the GND, 5V, A and B pins of the RJ12 plug to the adapter. Alternatively connect the 5V to an external power supply.
 
 2 – With the module off, join the two contacts marked “PROG”, turn on the power supply and then release the contacts. The module is now in UART programming mode.
 
