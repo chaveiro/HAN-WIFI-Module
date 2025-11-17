@@ -96,7 +96,7 @@ sensor.han_module_eb_dcp:
 
 sensor.han_module_eb_q:
   friendly_name: Reactive Power / Quality Factor Q
-  unit_of_measurement: VAR # Assuming this is Reactive Power based on common usage
+  unit_of_measurement: var # SI unit for reactive power is lowercase "var"
   # device_class: power # No specific device_class for reactive power, but 'power' is broad.
   state_class: measurement
 
