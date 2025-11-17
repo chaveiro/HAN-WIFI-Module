@@ -25,7 +25,7 @@ sensor.han_module_eb_pe:
 
 sensor.han_module_eb_pf:
   friendly_name: Power Factor
-  unit_of_measurement: "pf" # No standard device_class for power factor
+  unit_of_measurement: "" # No standard device_class for power factor
   state_class: measurement
 
 sensor.han_module_eb_f:
