@@ -129,7 +129,6 @@ sensor.han_module_eb_ch:
 
 sensor.han_module_eb_cm:
   friendly_name: Meter Minute
-  unit_of_measurement: m
   icon: mdi:clock-outline
   state_class: measurement
 
