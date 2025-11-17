@@ -1,0 +1,166 @@
+# Energy Billing (EB) Measurements
+sensor.han_module_eb_v1:
+  friendly_name: Voltage L1
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+
+sensor.han_module_eb_i1:
+  friendly_name: Current L1
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+
+sensor.han_module_eb_pi:
+  friendly_name: Active Power Import
+  unit_of_measurement: W
+  device_class: power
+  state_class: measurement
+
+sensor.han_module_eb_pe:
+  friendly_name: Active Power Export
+  unit_of_measurement: W
+  device_class: power
+  state_class: measurement
+
+sensor.han_module_eb_pf:
+  friendly_name: Power Factor
+  unit_of_measurement: "" # No standard device_class for power factor
+  state_class: measurement
+
+sensor.han_module_eb_f:
+  friendly_name: Frequency
+  unit_of_measurement: Hz
+  device_class: frequency
+  state_class: measurement
+
+# Cumulative Energy Totals (Crucial for Energy Dashboard)
+sensor.han_module_eb_et1:
+  friendly_name: Energy Consumed (Tariff 1 Vazio)
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total_increasing # Changed from measurement for proper energy tracking
+
+sensor.han_module_eb_et2:
+  friendly_name: Energy Consumed (Tariff 2 Ponta)
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total_increasing # Changed from measurement
+
+sensor.han_module_eb_et3:
+  friendly_name: Energy Consumed (Tariff 3 Cheia)
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total_increasing # Changed from measurement
+
+sensor.han_module_eb_ei:
+  friendly_name: Total Energy Imported
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total_increasing # Changed from measurement
+
+sensor.han_module_eb_ee:
+  friendly_name: Total Energy Exported
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total_increasing # Changed from measurement
+
+sensor.han_module_eb_tarif:
+  friendly_name: Active Tariff
+  # No unit_of_measurement needed, as it's a numeric indicator
+  # No device_class, as it's a state indicator
+  state_class: measurement # Keep measurement if you want to track changes
+
+# Contracted Power Limits (kVA)
+sensor.han_module_eb_cont1:
+  friendly_name: Contract Power T1 (Vazio)
+  unit_of_measurement: kVA
+  # No device_class for kVA, but power is closest in concept
+  state_class: measurement # Can keep measurement if these are static values you want to see
+
+sensor.han_module_eb_cont2:
+  friendly_name: Contract Power T2 (Ponta)
+  unit_of_measurement: kVA
+  state_class: measurement
+
+sensor.han_module_eb_cont3:
+  friendly_name: Contract Power T3 (Cheia)
+  unit_of_measurement: kVA
+  state_class: measurement
+
+# Demand Control Program (DCP) and related parameters
+sensor.han_module_eb_dcp:
+  friendly_name: Demand Control Program Status
+  # Unit and device_class not applicable for status.
+  state_class: measurement # Keep measurement if it changes
+
+sensor.han_module_eb_q:
+  friendly_name: Reactive Power / Quality Factor Q
+  unit_of_measurement: var # SI unit for reactive power is lowercase "var"
+  # device_class: power # No specific device_class for reactive power, but 'power' is broad.
+  state_class: measurement
+
+sensor.han_module_eb_k:
+  friendly_name: DCP Coefficient K
+  # Unitless coefficient
+  state_class: measurement
+
+# EB Clock Components (Date and Time)
+sensor.han_module_eb_year:
+  friendly_name: Meter Year
+  icon: mdi:calendar
+  state_class: measurement
+
+sensor.han_module_eb_month:
+  friendly_name: Meter Month
+  icon: mdi:calendar-month
+  state_class: measurement
+
+sensor.han_module_eb_day:
+  friendly_name: Meter Day
+  icon: mdi:calendar-day
+  state_class: measurement
+
+sensor.han_module_eb_ch:
+  friendly_name: Meter Hour
+  unit_of_measurement: h
+  icon: mdi:clock
+  state_class: measurement
+
+sensor.han_module_eb_cm:
+  friendly_name: Meter Minute
+  icon: mdi:clock-outline
+  state_class: measurement
+
+sensor.han_module_eb_cs:
+  friendly_name: Meter Second
+  icon: mdi:clock-fast
+  state_class: measurement
+
+# Other Tasmota-specific sensors (already have good default definitions)
+# I'll just ensure they have appropriate friendly names and device classes
+sensor.han_module_last_restart_time:
+  friendly_name: Han Module Last Restart Time
+  device_class: timestamp # Already correctly identified
+  # state_class is not applicable for timestamp
+
+sensor.han_module_mqtt_connect_count:
+  friendly_name: MQTT Connect Count
+  icon: mdi:counter
+  state_class: total_increasing # Should be total_increasing for a counter
+
+sensor.han_module_restart_reason:
+  friendly_name: Restart Reason
+  icon: mdi:information-outline
+  # No state_class for text sensor
+
+sensor.han_module_ssid:
+  friendly_name: Connected WiFi SSID
+  icon: mdi:access-point-network
+  # No state_class for text sensor
+
+# Assuming this entity exists based on the provided partial list
+sensor.han_module_wifi_connect_count:
+  friendly_name: WiFi Connect Count
+  icon: mdi:counter
+  state_class: total_increasing # Should be total_increasing for a counter
