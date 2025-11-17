@@ -134,7 +134,6 @@ sensor.han_module_eb_cm:
 
 sensor.han_module_eb_cs:
   friendly_name: Meter Second
-  unit_of_measurement: s
   icon: mdi:clock-fast
   state_class: measurement
 
