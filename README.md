@@ -91,3 +91,8 @@ upload.py --chip esp8266 --port COM3 --baud 921600 erase_flash --before default_
 2 – Turn on the module for 2 seconds and turn it off. Repeat 7 times, leave on last time.
 
 3 – The parameters have been reset, you can configure the WIFI as in the first installation.
+
+
+### PCB photos
+![v2 top](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/pcb v2 top.jpg)
+![v2 bottom](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/pcb v2 back.jpg)
