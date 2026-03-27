@@ -44,6 +44,9 @@ if upsecs%tper==0
 pi_d=pin-pi_m
 po_d=pout-po_m
 
+;year clock was received
+if sml[1]!=0
+{
 ;#Single phase - Voltage, Current, Power, Power Factor, Frequency
 =>%ws%/input/post.json?node=%node%&json={P:%sml[7]%,Pe:%sml[8]%,Pf:%sml[9]%,F:%sml[10]%,V:%sml[11]%,I:%sml[12]%}&devicekey=%key%
 
@@ -62,7 +65,7 @@ po_d=pout-po_m
 ;#DCP
 =>%ws%/input/post.json?node=%node%&json={DCP:%sml[36]%,Q:%sml[37]%,K:%sml[38]%}&devicekey=%key%
 
-}
+}}
 
 ;#show on WEBUI main page
 >W
@@ -152,5 +155,4 @@ Daily Export: {m} %po_d% kWh
 1,01040axxUUuuUUuu@i7:1,DCP Q,,Q,0
 1,01040axxxxxxxxxxUUuuUUuu@i7:100,DCP K,,K,1
 
-
-#
+;EOF

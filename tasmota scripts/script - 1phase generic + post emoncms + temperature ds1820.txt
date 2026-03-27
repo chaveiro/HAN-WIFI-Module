@@ -6,6 +6,9 @@ po_d=0
 hr=0
 p:pi_m=0
 p:po_m=0
+ws="WebSend [emoncms.org:80]"
+node="EdpBox"
+key="___CHANGE_TO_YOUR_DEVICE_KEY____"
 
 ;#after sensors init
 >BS
@@ -40,6 +43,27 @@ if upsecs%tper==0
 {
 pi_d=pin-pi_m
 po_d=pout-po_m
+
+;year clock was received
+if sml[1]!=0
+{
+;#Single phase - Voltage, Current, Power, Power Factor, Frequency
+=>%ws%/input/post.json?node=%node%&json={V:%sml[7]%,I:%sml[8]%,P:%sml[9]%,Pe:%sml[10]%,Pf:%sml[11]%,F:%sml[12]%}&devicekey=%key%
+
+
+;#Energy
+=>%ws%/input/post.json?node=%node%&json={ET1:%sml[13]%,ET2:%sml[14]%,ET3:%sml[15]%,Ei:%sml[16]%,Ee:%sml[17]%,Tarif:%sml[18]%,ConT1:%sml[19]%}&devicekey=%key%
+
+;#DCP
+=>%ws%/input/post.json?node=%node%&json={DCP:%sml[22]%,Q:%sml[23]%,K:%sml[24]%}&devicekey=%key%
+
+}}
+
+;# temperature
+if upsecs%60==0
+{
+=>%ws%/input/post.json?node=%node%&json={T:%gtmp%}&devicekey=%key%
+temp_last=temp
 }
 
 ;#show on WEBUI main page

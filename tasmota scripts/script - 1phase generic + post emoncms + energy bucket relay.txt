@@ -1,0 +1,234 @@
+>D 32
+pin=0
+pout=0
+hr=0
+hm=0
+ws="WebSend [emoncms.org:80]"
+node="EdpBox"
+key="___CHANGE_TO_YOUR_DEVICE_KEY____"
+
+
+; net meter
+pi=0
+po=0
+bi=0 ; imp sum (Ws)
+be=0 ; exp sum (Ws)
+tm=0 ; time
+b=0  ; avg (W)
+bp1=0 ; est r1
+bp2=0 ; est r2
+b0=0 ; prev (W)
+
+; thresholds
+p:th1=700  ; W power1
+p:th2=2000 ; W power2
+p:marg=30  ; W margin
+p:rmin=60  ; s tempo reles
+p:lat1=300 ; s latência power1, tempo a alterar consumo após mudar estado
+
+p1ts=0  ; ultima comutação
+p2ts=0 
+p1tm=0  ; tempo comutado
+p2tm=0 
+p1adj=0 ; previsão consumo futuro
+p2adj=0
+
+
+;#after sensors init
+>BS
+smlj=0
+tper=30
+=>sensor53 r
+
+;#TelePeriod
+>T
+pin=sml[16]   ; Ei
+pout=sml[17]  ; Ee
+
+
+;#every second
+>S
+
+if upsecs>20 and upsecs<30
+{
+ smlj=1
+}
+
+; # meter year
+if sml[1]!=0
+{
+pi=sml[9]   ; Pi
+po=sml[10]  ; Pe
+hm=sml[5]   ; meter min clock
+
+; new 15m
+if (hm%15==0 and chg[hm]>0)
+{
+ bi=0
+ be=0
+ tm=0
+ b0=b
+}
+
+; accumulate
+bi+=pi
+be+=po
+tm+=1
+
+
+; Estimate latency
+p1tm=upsecs-p1ts
+p2tm=upsecs-p2ts
+p1adj=0
+p2adj=0
+
+if lat1<(900.0-tm)
+{
+ p1adj=((900.0-tm)-lat1)*th1/900.0
+ if pwr[1]==0
+ {
+   p1adj=-1*p1adj
+ }
+}
+
+p2adj=(900.0-tm)*th2/900.0
+if pwr[2]==0
+{
+  p2adj=-1*p2adj
+}
+
+
+if (upsecs<20 or tm>1000)
+{
+ print Bucket FAILSAFE
+ =>power1 0
+ =>power2 0
+} else {
+
+ b=((be*(900.0/tm))-(bi*(900.0/tm)))/900.0  ; W net avg
+ bp1=b+p1adj
+ bp2=b+p2adj
+ 
+ ;R1
+ if ((b>marg) and (b0>marg) and (bp1>marg) and (bp1>th1/2))
+ {
+  if ((pwr[1]==0) and (p1tm>rmin))
+  {
+   print Bucket %b% > %marg% bp1=%bp1% R1=ON
+   =>power1 1
+   p1ts=upsecs
+  }
+ } else {
+  if ((pwr[1]==1) and (b<marg) and (p1tm>rmin))
+  {
+   print Bucket %b% <= %marg% bp1=%bp1% R1=OFF
+   =>power1 0
+   p1ts=upsecs
+  }
+ }
+   
+ ;R2
+ if b>(th2+marg)
+ {
+  if ((pwr[2]==0) and (p2tm>rmin))
+  {
+   print Bucket %b% > th2+marg %th2% R2=ON
+   =>power2 1
+   p2ts=upsecs
+  }
+ } else {
+  if ((pwr[2]==1) and (b<(th2-marg)) and (p2tm>rmin))
+  {
+   print Bucket %b% <= th2 %th2% R2=OFF
+   =>power2 0 
+   p2ts=upsecs
+  }
+ }
+
+}
+
+
+if upsecs%tper==0
+{
+
+=>%ws%/input/post.json?node=%node%&json={V:%sml[7]%,I:%sml[8]%,P:%sml[9]%,Pe:%sml[10]%,Pf:%sml[11]%,F:%sml[12]%}&devicekey=%key%
+
+=>%ws%/input/post.json?node=%node%&json={ET1:%sml[13]%,ET2:%sml[14]%,ET3:%sml[15]%,Ei:%sml[16]%,Ee:%sml[17]%,Tarif:%sml[18]%,ConT1:%sml[19]%}&devicekey=%key%
+
+=>%ws%/input/post.json?node=%node%&json={B:%b%,BP1:%bp1%,DCP:%sml[22]%,Q:%sml[23]%,K:%sml[24]%,R1:%pwr[1]%,R2:%pwr[2]%}&devicekey=%key%
+
+}
+}
+
+
+>W
+<br>Bucket Relay
+nm(100 1500 100 th1 "R1 load (W)")
+nm(100 3000 100 th2 "R2 load (W)")
+nm(0 100 5 marg "Hysterese (W)")
+nm(60 600 30 lat1 "R1 Latency (s)")
+nm(60 900 30 rmin "min time (s)")
+Time {m} %tm% s
+Current {m} %b% W
+Previous {m} %b0% W
+R1 Time {m} %p1tm% s
+R2 Time: {m} %p2tm% s
+R1 adj latency {m} %p1adj% Ws
+R2 adj latency {m} %p2adj% Ws
+R1 Forecast {m} %bp1% Ws
+R2 Forecast {m} %bp2% Ws
+
+
+>M 1
++1,3,mN1,1,9600,EB,1(16),15,r010400010001,r0104006C0002,r010400790003,r0104007F0002,r010400260003,r010400160006,r0104000B0004,r010400840003
+
+1,=hClock
+; 01
+1,01040CUUuu@i0:1,Year,,Year,0
+1,01040Cx2uu@i0:1,Month,,Month,0
+1,01040Cx3uu@i0:1,Day,,Day,0
+1,01040Cx5uu@i0:1,Clock,h,CH,0
+1,01040Cx6uu@i0:1,Clock,m,CM,0
+1,01040Cx7uu@i0:1,Clock,s,CS,0
+
+1,=h<hr> Overview
+; 6C
+1,0104xxUUuu@i1:10,Voltage L1,V,V1,1
+1,0104xxxxxxUUuu@i1:10,Current L1,A,I1,1
+; 79
+1,01040aUUuuUUuu@i2:1,Active Power Import,W,Pi,0
+; 7A
+1,01040ax4UUuuUUuu@i2:1,Active Power Export,W,Pe,0
+; 7B
+1,01040ax8UUuu@i2:1000,Power Factor,pf,PF,3
+; 7F
+1,0104xxUUuu@i3:10,Frequency,Hz,F,1
+
+
+1,=h<hr>Energy
+; 26
+1,01040CUUuuUUuu@i4:1000,T1 Vazio (1),kWh,ET1,1
+1,01040Cx4UUuuUUuu@i4:1000,T2 Ponta (2),kWh,ET2,1
+1,01040Cx8UUuuUUuu@i4:1000,T3 Cheia (3),kWh,ET3,1
+; 16
+1,010418UUuuUUuu@i5:1000,Import,kWh,Ei,3
+1,010418x4UUuuUUuu@i5:1000,Export,kWh,Ee,3
+
+1,=h<hr>
+
+; 0B
+
+1,01040euu@i6:1,Tariff ,,Tarif,0
+1,01040exxUUuuUUuu@i6:1000,Contract T1,kVA,ConT1,2
+1,01040exxx4UUuuUUuu@i6:1000,Contract T2,kVA,ConT2,2
+1,01040exxx8UUuuUUuu@i6:1000,Contract T3,kVA,ConT3,2
+
+1,=h<hr>
+
+; 84
+
+1,01040auu@i7:1,DCP,,DCP,0
+1,01040axxUUuuUUuu@i7:1,DCP Q,,Q,0
+1,01040axxx4UUuuUUuu@i7:100,DCP K,,K,1
+
+;EOF

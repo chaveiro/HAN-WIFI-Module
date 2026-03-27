@@ -60,6 +60,15 @@ The module comes with the latest version of the opensource Tasmota project, maki
 
 Note: The script initiation is done with the underlined parameters: +1,3,m,1,9600,EB,1(16),[…]
 
+### Script Selection
+
+Scripts are labeled as follow, choose acordingly to your needs:
+##### Generic - works with all metters
+##### Bucket - Allow to manage a relay with solar surplus energy, config in the web ui.
+##### Temperature - script allow to repost from a connected sensor
+##### Post emoncms - Sends data to emoncms.org (config your device key)
+##### Old - discontinued
+
 ### Over The Air Update
 1 – Connect to the same WIFI network where the module is connected. Open the module IP obtained in the WIFI configuration in the browser, or check which one has been assigned on your router.
 
