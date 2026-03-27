@@ -5,6 +5,10 @@ The Mini HAN module is a HAN - WIFI adapter designed to be connected externally 
 
 The module comes with the latest version of the opensource Tasmota project, making it highly adaptable, by customizing the Tasmota script, to the needs of your projects. More info at https://tasmota.github.io/docs/Smart-Meter-Interface/
 
+### PCB photos
+![v2 top](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/pcb_v2_top.jpg)
+
+![v2 bottom](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/pcb_v2_back.jpg)
 
 ## Technical Characteristics
   | Parameter              | Value
@@ -92,7 +96,3 @@ upload.py --chip esp8266 --port COM3 --baud 921600 erase_flash --before default_
 
 3 – The parameters have been reset, you can configure the WIFI as in the first installation.
 
-
-### PCB photos
-![v2 top](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/pcb v2 top.jpg)
-![v2 bottom](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/pcb v2 back.jpg)
