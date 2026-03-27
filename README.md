@@ -67,15 +67,16 @@ Note: The script initiation is done with the underlined parameters: +1,3,m,1,960
 ### Script Selection
 
 Scripts are labeled as follow, choose acordingly to your needs:
-  **Generic** - works with all metters
+
+   **Generic** - works with all metters
   
-  **Bucket** - Allow to manage one or two relays with (solar) surplus energy, config in the web ui.
+   **Bucket** - Allow to manage one or two relays with (solar) surplus energy, config in the web ui.
   
-  **Temperature** - script allow to repost from a connected sensor
+   **Temperature** - script allow to repost from a connected sensor
   
-  **Post emoncms** - Sends data to emoncms.org (config your device key)
+   **Post emoncms** - Sends data to emoncms.org (config your device key)
   
-  **Old** - discontinued
+   **Old** - discontinued
   
 
 ### Over The Air Update
