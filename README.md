@@ -1,5 +1,5 @@
 # HAN-WIFI-Module
-The HAN module is a HAN &lt;-> WIFI adapter designed to be connected externally to Intelligent Measuring Equipment (EMI) of single-phase or three-phase BTN points using the Modbus communication protocol, part of the InovGrid solution developed by E-Redes in Portugal (formerly EDP Distribution) or other similar systems that use the same protocol.
+The HAN module is a HAN - WIFI adapter designed to be connected externally to Intelligent Measuring Equipment (EMI) of single-phase or three-phase BTN points using the Modbus communication protocol, part of the InovGrid solution developed by E-Redes in Portugal (formerly EDP Distribution) or other similar systems that use the same protocol.
 
 ![Install](https://github.com/chaveiro/HAN-WIFI-Module/raw/main/images/instalation.jpg)
 
@@ -63,11 +63,11 @@ Note: The script initiation is done with the underlined parameters: +1,3,m,1,960
 ### Script Selection
 
 Scripts are labeled as follow, choose acordingly to your needs:
-##### Generic - works with all metters
-##### Bucket - Allow to manage a relay with solar surplus energy, config in the web ui.
-##### Temperature - script allow to repost from a connected sensor
-##### Post emoncms - Sends data to emoncms.org (config your device key)
-##### Old - discontinued
+  **Generic** - works with all metters
+  **Bucket** - Allow to manage one or two relays with (solar) surplus energy, config in the web ui.
+  **Temperature** - script allow to repost from a connected sensor
+  **Post emoncms** - Sends data to emoncms.org (config your device key)
+  **Old** - discontinued
 
 ### Over The Air Update
 1 – Connect to the same WIFI network where the module is connected. Open the module IP obtained in the WIFI configuration in the browser, or check which one has been assigned on your router.
