@@ -68,10 +68,15 @@ Note: The script initiation is done with the underlined parameters: +1,3,m,1,960
 
 Scripts are labeled as follow, choose acordingly to your needs:
   **Generic** - works with all metters
+  
   **Bucket** - Allow to manage one or two relays with (solar) surplus energy, config in the web ui.
+  
   **Temperature** - script allow to repost from a connected sensor
+  
   **Post emoncms** - Sends data to emoncms.org (config your device key)
+  
   **Old** - discontinued
+  
 
 ### Over The Air Update
 1 – Connect to the same WIFI network where the module is connected. Open the module IP obtained in the WIFI configuration in the browser, or check which one has been assigned on your router.
